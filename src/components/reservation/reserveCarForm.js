@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "antd/dist/antd.css";
 import "./reserveCarForm.css";
+import axios from "axios";
 import { Input, Select, DatePicker, Space, Button, TimePicker } from "antd";
 import moment from "moment";
 
@@ -19,33 +20,48 @@ class ReserveCarForm extends React.Component {
       return_Date: new Date(),
       return_Time: new Date(),
       output: [],
-      options: [
-        {
-          label: "Apple",
-          value: "apple",
-        },
-        {
-          label: "Mango",
-          value: "mango",
-        },
-        {
-          label: "Banana",
-          value: "banana",
-        },
-        {
-          label: "Pineapple",
-          value: "pineapple",
-        },
-      ],
-      // startDate: new Date(),
-      // startTime: new Date(),
+      List: [],
+      // options: [ // mock data
+      //   {
+      //     label: "location1",
+      //     value: "location1",
+      //   },
+      //   {
+      //     label: "location2",
+      //     value: "location2",
+      //   },
+      //   {
+      //     label: "location3",
+      //     value: "location3",
+      //   },
+      //   {
+      //     label: "location4",
+      //     value: "location4",
+      //   },
+      // ],
     };
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // get list item from location db.
+  async componentDidMount() {
+    console.log("Location items List");
+    const httpResponse = await axios.get("http://localhost:8000/Location");
+    console.log("List httpResponse :", httpResponse.data);
+    this.setState({ List: httpResponse.data });
+    console.log("List after state:", typeof httpResponse.data);
+  }
+  renderListList(items) {
+    console.log("items", items);
+
+    // map items to get array
+    return items;
+  }
+
   handleLocationChange(event) {
+    console.log("List", this.state.List);
     console.log("event:", event);
     // cannot get from event.target.value ??? donot know why?
     this.setState({
@@ -69,6 +85,7 @@ class ReserveCarForm extends React.Component {
   };
 
   // get list item from location db.
+
   // maybe input dropdown choose limit location
   // put data to reservation table
   handleSubmit(event) {
@@ -78,11 +95,20 @@ class ReserveCarForm extends React.Component {
     alert("You just change time: " + this.state.pickup_Time);
     event.preventDefault();
   }
-
+  // renderList() {
+  //   return (
+  //     <div className="List">
+  //       {!this.state.isLoading && this.renderListList(this.state.List)}
+  //     </div>
+  //   );
+  // }
   render() {
     return (
       <div>
         <form>
+          {/* <div className="List">
+            {!this.state.isLoading && this.renderListList(this.state.List)}
+          </div> */}
           <div className="InputForm">
             <Input.Group compact>
               <Select
@@ -91,8 +117,8 @@ class ReserveCarForm extends React.Component {
                 defaultValue="Select your pick-up location..." // set at state
                 onChange={this.handleLocationChange}
               >
-                {this.state.options.map((option) => (
-                  <option value={option.value}>{option.label}</option>
+                {this.state.List.map((item) => (
+                  <option value={item.locationId}>{item.locationName}</option>
                 ))}
 
                 {/* <Option value="Option1">Option1</Option>
