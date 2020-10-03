@@ -1,11 +1,11 @@
 .Button {
-  background-color: transparent;
+  background-color: #555555;
   border: none;
   font: inherit;
   font-weight: bold;
   outline: none;
   cursor: pointer;
-  color: black;
+  color: whitesmoke;
   margin: 10px;
   padding: 10px;
 }
@@ -44,7 +44,7 @@
   outline: none;
   background-color: white;
   font: inherit;
-  border: 1px solid #ccc;
+  border: 5px solid transparent;
   width: 100%;
   padding: 6px 10px;
   display: block;
@@ -55,6 +55,7 @@
 .InputElement:focus {
   background-color: #ccc;
   outline: none;
+  margin: 20px auto;
 }
 
 .App {

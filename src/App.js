@@ -1,6 +1,8 @@
+// should move to Routes.js later.
+
 import React from "react";
+import ReactDOM from "react-dom";
 import "./App.css";
-// import ReserveCarForm from "./components/reservation/reserveCarForm"; // move to index page.
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 // import Register from "./components/pages/Login";
@@ -8,7 +10,7 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Home from "./components/pages/Home";
 import Login from "./components/pages/Home";
 import Location from "./components/pages/Location";
-import CarAndService from "./components/pages/CarAndService";
+import Car from "./components/pages/Car";
 import Reservation from "./components/pages/Reservation";
 function App() {
   return (
@@ -17,16 +19,18 @@ function App() {
     // </React.StrictMode>
 
     <div className="App">
-      <Switch>
-        {/* <Route exact path="/" component={Index} /> */}
-        {/* <Route exact path="/login" component={Login} /> */}
-        {/* <Route exact path="/register" component={Register} /> */}
-        {/* <Route exact path="/home" component={Home} /> */}
-        {/* <Route exact path="/location" component={Location} /> */}
-        {/* <Route exact path="/carandservice" component={CarAndService} /> */}
-        <Route exact path="/reservation" component={Reservation} />
-        <Redirect to="/" />
-      </Switch>
+      <BrowserRouter>
+        <Switch>
+          {/* <Route exact path="/" component={Index} /> */}
+          {/* <Route exact path="/login" component={Login} /> */}
+          {/* <Route exact path="/register" component={Register} /> */}
+          {/* <Route exact path="/home" component={Home} /> */}
+          {/* <Route exact path="/location" component={Location} /> */}
+          <Route exact path="/reservation" component={Reservation} />
+          <Route exact path="/reservation/selectcar" component={Car} />
+          <Redirect to="/reservation" />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }

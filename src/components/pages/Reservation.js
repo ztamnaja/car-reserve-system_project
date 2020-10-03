@@ -1,11 +1,11 @@
 import React from "react";
-import ReserveCarForm from "../reservation/reserveCarForm";
+import ReserveCar from "../reservation/reserveCar";
 
 export default function index() {
   return (
     <div>
       Reservations page
-      <ReserveCarForm />
+      <ReserveCar />
     </div>
   );
 }
