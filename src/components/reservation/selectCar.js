@@ -1,84 +1,175 @@
 import React, { Component } from "react";
-import "antd/dist/antd.css";
-// import "./selectCar.css";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
-import { List, Button, Space, Descriptions, Divider } from "antd";
+import {
+  List,
+  Button,
+  Space,
+  Statistic,
+  Descriptions,
+  Tooltip,
+  Popover,
+  Steps,
+} from "antd";
+import "antd/dist/antd.css";
+import {
+  UserOutlined,
+  ShoppingFilled,
+  ExportOutlined,
+} from "@ant-design/icons";
+import "./selectCar.css";
 
+// import { createBrowserHistory } from "history"; // using withRouter and this.props.history.push
+// export const browserHistory = createBrowserHistory();
+const { Step } = Steps;
 class SelectCar extends Component {
-  state = {
-    List: [],
-    loading: true,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      List: [],
+      loading: true,
+      carId: "",
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
   // this.props.location.state
   // get list item from cars db.
   async componentDidMount() {
     console.log("Cars List");
     const pickup_locationName = localStorage.getItem("pickup_locationName");
+    const pickup_Date = localStorage.getItem("pickup_Date");
+    const pickup_Time = localStorage.getItem("pickup_Time");
     const return_locationName = localStorage.getItem("return_locationName");
-    console.log("pickup_locationName", pickup_locationName);
-    console.log("return_locationName", return_locationName);
+    const return_Date = localStorage.getItem("return_Date");
+    const return_Time = localStorage.getItem("return_Time");
+
+    //get items from mysql>>
     const httpResponse = await axios.get("http://localhost:8000/car");
     console.log("List httpResponse :", httpResponse.data);
     this.setState({
       List: httpResponse.data,
-      pickup_locationName,
-      return_locationName,
+      pickup_locationName: pickup_locationName,
+      return_locationName: return_locationName,
+      pickup_Date: pickup_Date,
+      pickup_Time: pickup_Time,
+      return_Date: return_Date,
+      return_Time: return_Time,
     });
     console.log("List after state:", typeof httpResponse.data);
   }
-  render() {
-    const loading = this.state;
 
+  handleSubmit = (event) => {
+    // event.preventDefault(); // not reload when onclick submit.
+    console.log("click SELECT A CAR", event.currentTarget.value);
+    this.setState({ isLoading: true });
+    // this.setState({
+    //   carId: event.target.value,
+    // });
+    // send datas and go to next page.
+    localStorage.setItem("carId", event.currentTarget.value);
+    this.props.history.push("/reservation/selectcar/userinfo");
+
+    // browserHistory.push({
+    //   pathname: "http://localhost:3000/reservation/selectcar/userinfo",
+    //   // data: reserveCarData,
+    // });
+    // this.props.history.push(
+    //   "http://localhost:3000/reservation/selectcar/userinfo"
+    // );
+    if (event.currentTarget.value != undefined) {
+    }
+  };
+
+  render() {
     return (
-      <div
-        style={{
-          textAlign: "center",
-          marginTop: 12,
-          height: 32,
-          lineHeight: "32px",
-        }}
-      >
+      <div className="selectCarForm">
+        <Steps size="small" progressDot current={1}>
+          <Step
+            title="RESERVE A CAR"
+            // className="site-navigation-steps"
+            // type="navigation"
+            // size="small"
+            // current={current}
+            // onChange={this.onChange}
+          />
+          <Step title="SELECT A CAR" />
+          <Step title="YOUR INFOMATION" />
+        </Steps>
+
+        <div>
+          <Descriptions size="small" column={2}>
+            <div>
+              <Descriptions.Item>
+                Pick-up Location: {this.state.pickup_locationName}
+                <br />
+                {this.state.pickup_Date}, {this.state.pickup_Time}
+                <br />
+              </Descriptions.Item>
+            </div>
+            <div className="divisionLine">
+              <Descriptions.Item>
+                Return Location: {this.state.return_locationName}
+                <br />
+                {this.state.return_Date}, {this.state.return_Time}
+                <br />
+              </Descriptions.Item>
+            </div>
+          </Descriptions>
+        </div>
         <List
           className="demo-loadmore-list"
           size="large"
           itemLayout="horizontal"
           dataSource={this.state.List}
-          header={<div>Header</div>}
+          header={<div></div>}
           renderItem={(item) => (
-            <List.Item
-              key={item.carId}
-              extra={
-                <img
-                  width={200}
-                  alt="carSamplePic"
-                  src="https://www.autoduqaan.com/images/no-image-big.jpg"
-                />
-              }
-            >
+            <List.Item key={item.carId}>
+              {/* item.carImg */}
+              <img
+                width={200}
+                alt="carSamplePic"
+                src="https://www.autoduqaan.com/images/no-image-big.jpg"
+              />
+              {/* <List.Item.Meta
+                itemLayout="horizontal"
+                className="eachElement"
+                title={item.carName}
+                description={
+                  <div>
+                    <p>Door: {item.carInfoDoor} </p>
+                    <p>Seat: {item.carInfoSeat} </p>
+                    <p>Bag: {item.carInfoBags} </p>
+                    <p>Gear: {item.carInfoGear} </p>
+                    <p>AC: {item.carInfoAC} </p>
+                    <p>Radio: {item.carInfoRadio} </p>
+                  </div>
+                }
+              /> */}
+              <Statistic title={item.carBrandName} value={item.carName} />
               <div>
-                <List.Item.Meta
-                  className="eachElement"
-                  title={item.carName}
-                  description={item.carBrandName}
-                />
-                <Descriptions layout="vertical">
-                  {/* <Descriptions.Item label="Model" span={1}>
-                    {item.carName}
-                  </Descriptions.Item> */}
-                  <Descriptions.Item label="Price">
-                    {item.carPrice}
-                    <Space align="baseline" className="space-align-block">
-                      <Button
-                        type="primary"
-                        onClick={this.handleSubmit}
-                        htmlFor="submit"
-                      >
-                        SELECT
-                      </Button>
-                    </Space>
-                  </Descriptions.Item>
-                </Descriptions>
+                <p>
+                  <ExportOutlined />
+                  Door: {item.carInfoDoor}{" "}
+                </p>
+
+                <p>
+                  <UserOutlined />
+                  Seat: {item.carInfoSeat}
+                </p>
+                <p>
+                  <ShoppingFilled />
+                  Bag: {item.carInfoBags}
+                </p>
               </div>
+
+              <Statistic title="Price (THB)" prefix="฿" value={item.carPrice} />
+              <Button
+                value={item.carId}
+                style={{ marginTop: 28 }}
+                onClick={this.handleSubmit.bind(this)}
+              >
+                SELECT
+              </Button>
             </List.Item>
           )}
         />
@@ -87,36 +178,4 @@ class SelectCar extends Component {
   }
 }
 
-export default SelectCar;
-
-// return (
-//   <List
-//     itemLayout="horizontal"
-//     dataSource={this.state.List}
-//     renderItem={(item) => (
-//       <List.Item>
-//         <Card
-//           style={{ width: 250 }}
-//           cover={
-//             <img
-//               alt="example"
-//               src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-//             />
-//           }
-//           actions={[<EllipsisOutlined key="ellipsis" />]}
-//         >
-//           <Meta title={item.carName} description={item.carId} />
-//           <Space align="baseline" className="space-align-block">
-//             <Button
-//               type="primary"
-//               onClick={this.handleSubmit}
-//               htmlFor="submit"
-//             >
-//               SELECT
-//             </Button>
-//           </Space>
-//         </Card>
-//       </List.Item>
-//     )}
-//   />
-// );
+export default withRouter(SelectCar);

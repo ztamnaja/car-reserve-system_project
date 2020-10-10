@@ -1,11 +1,11 @@
-.selectCarForm {
+.userInfo {
   margin: 20px auto;
   width: 50%;
   text-align: center;
   padding: 10px;
   box-sizing: border-box;
 }
-.selectCarIcon {
+.userInfo form textarea {
   height: 300px;
   font-size: 24px;
 }

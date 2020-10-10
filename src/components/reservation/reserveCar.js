@@ -1,16 +1,24 @@
 import React, { Component } from "react";
-
+import { withRouter } from "react-router-dom";
 import "antd/dist/antd.css";
 import "./reserveCar.css";
 import axios from "axios";
-import { Input, Select, DatePicker, Space, Button, TimePicker } from "antd";
+import {
+  Input,
+  Select,
+  DatePicker,
+  Space,
+  Button,
+  TimePicker,
+  Steps,
+} from "antd";
 import moment from "moment";
 import { useHistory, router } from "react-router-dom";
 import { createBrowserHistory } from "history";
 export const browserHistory = createBrowserHistory();
 
 const { Option } = Select;
-
+const { Step } = Steps;
 class ReserveCar extends Component {
   constructor(props) {
     super(props);
@@ -122,35 +130,29 @@ class ReserveCar extends Component {
     localStorage.setItem("return_Time", this.state.return_Time);
     // send datas and go to next page.
     // console.log("reserveCarData", reserveCarData);
-    // this.context.router.push({
-    browserHistory.push({
+    this.props.history.push({
       pathname: "/reservation/selectcar",
       // data: reserveCarData,
     });
-
-    // alert("You just change localtion: " + this.state.pickup_locationName);
-    // alert("You just change date: " + this.state.pickup_Date);
-    // alert("You just change time: " + this.state.pickup_Time);
-    // alert("You just change localtion: " + this.state.return_locationName);
-    // alert("You just change date: " + this.state.return_Date);
-    // alert("You just change time: " + this.state.return_Time);
   };
-
-  onNavigateHome(event) {
-    console.log("this.props.history", this.props.history);
-    this.setState({ isLoading: true });
-    // browserHistory.push("/reservation/selectcar");
-    browserHistory.push({
-      pathname: "/reservation/selectcar",
-      // data: reserveCarData,
-    });
-    // event.preventDefault();
-    // this.props.history.push("/reservation/selectcar");
-  }
 
   render() {
     return (
       <div>
+        <div className="reserveCarStep">
+          <Steps size="small" progressDot current={0}>
+            <Step
+              title="RESERVE A CAR"
+              // className="site-navigation-steps"
+              // type="navigation"
+              // size="small"
+              // current={current}
+              // onChange={this.onChange}
+            />
+            <Step title="SELECT A CAR" />
+            <Step title="YOUR INFOMATION" />
+          </Steps>
+        </div>
         <form>
           <div className="InputForm">
             <Input.Group className="InputElement" compact>
@@ -168,10 +170,10 @@ class ReserveCar extends Component {
               </Select>
               <DatePicker
                 style={{ width: "30%" }}
-                defaultValue={moment(new Date(), "DD/MM/YY")}
+                defaultValue={moment(new Date(), "dddd, MMMM Do YYYY")}
                 selected={this.state.pickup_Date}
                 name="pickup_Date"
-                format="DD/MM/YY"
+                format="dddd, MMMM Do YYYY"
                 // selected={this.state.pickup_Date}
                 onChange={this.handleDateChange_pickup}
               />
@@ -199,10 +201,10 @@ class ReserveCar extends Component {
               </Select>
               <DatePicker
                 style={{ width: "30%" }}
-                defaultValue={moment(new Date(), "DD/MM/YY")}
+                defaultValue={moment(new Date(), "dddd, MMMM Do YYYY")}
                 selected={this.state.return_Date}
                 name="return_Date"
-                format="DD/MM/YY"
+                format="dddd, MMMM Do YYYY"
                 // selected={this.state.return_Date}
                 onChange={this.handleDateChange_return}
               />
@@ -235,4 +237,4 @@ class ReserveCar extends Component {
     );
   }
 }
-export default ReserveCar;
+export default withRouter(ReserveCar);

@@ -6,3 +6,10 @@
   height: 300px;
   font-size: 24px;
 }
+.reserveCarStep {
+  margin: 20px auto;
+  width: 50%;
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
