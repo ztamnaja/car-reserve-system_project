@@ -8,9 +8,9 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Home from "./components/pages/Home";
 import Login from "./components/pages/Home";
 import Location from "./components/pages/Location";
-import Car from "./components/pages/Car";
 import Reservation from "./components/pages/Reservation";
-import Userinfo from "./components/pages/UserInfo";
+import Car from "./components/pages/Car";
+import Reserveinfo from "./components/pages/ReserveInfo";
 
 function App() {
   return (
@@ -29,8 +29,8 @@ function App() {
         <Route exact path="/reservation/selectcar" component={Car} />
         <Route
           exact
-          path="/reservation/selectcar/userinfo"
-          component={Userinfo}
+          path="/reservation/selectcar/reserveinfo"
+          component={Reserveinfo}
         />
         {/* <Redirect to="/reservation" /> */}
       </Switch>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
+import moment from "moment";
 import {
   List,
   Button,
@@ -32,7 +33,6 @@ class SelectCar extends Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  // this.props.location.state
   // get list item from cars db.
   async componentDidMount() {
     console.log("Cars List");
@@ -62,21 +62,12 @@ class SelectCar extends Component {
     // event.preventDefault(); // not reload when onclick submit.
     console.log("click SELECT A CAR", event.currentTarget.value);
     this.setState({ isLoading: true });
-    // this.setState({
-    //   carId: event.target.value,
-    // });
-    // send datas and go to next page.
-    localStorage.setItem("carId", event.currentTarget.value);
-    this.props.history.push("/reservation/selectcar/userinfo");
 
-    // browserHistory.push({
-    //   pathname: "http://localhost:3000/reservation/selectcar/userinfo",
-    //   // data: reserveCarData,
-    // });
-    // this.props.history.push(
-    //   "http://localhost:3000/reservation/selectcar/userinfo"
-    // );
-    if (event.currentTarget.value != undefined) {
+    // send data and go to next page.
+    localStorage.setItem("carId", event.currentTarget.value);
+    this.props.history.push("/reservation/selectcar/reserveinfo");
+
+   if (event.currentTarget.value != undefined) {
     }
   };
 
