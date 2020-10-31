@@ -1,10 +1,10 @@
 import React from "react";
-import Home from "../home";
+import CarModels from "../carModels";
 
 export default function index() {
   return (
     <div>
-      <Home />
+      <CarModels />
     </div>
   );
 }

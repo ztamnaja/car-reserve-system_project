@@ -1,0 +1,30 @@
+.layout {
+    position: relative;
+    width: 1200px;
+    height: 500px;
+    left:50;    
+    /* border: 3px solid #73AD21; */
+}
+
+.register-form {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  width: 500px;
+  height: 370px;
+  text-align: center;
+  padding : 30px;
+  border: 1px solid#b2b2b2;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  /* background-color: #feb236; */
+  
+}
+.register-form-forgot {
+  float: right;
+}
+.ant-col-rtl .register-form-forgot {
+  float: left;
+}
+.register-form-button {
+  width: 100%;
+}

@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
-import moment from "moment";
+import Navbar from "../navbar";
 import {
   List,
   Button,
-  Space,
   Statistic,
   Descriptions,
-  Tooltip,
-  Popover,
   Steps,
 } from "antd";
 import "antd/dist/antd.css";
@@ -73,6 +70,8 @@ class SelectCar extends Component {
 
   render() {
     return (
+      <div>
+        <Navbar />
       <div className="selectCarForm">
         <Steps size="small" progressDot current={1}>
           <Step
@@ -164,6 +163,7 @@ class SelectCar extends Component {
             </List.Item>
           )}
         />
+      </div>
       </div>
     );
   }

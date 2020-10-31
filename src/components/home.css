@@ -1,0 +1,139 @@
+* {
+  box-sizing: border-box;
+}
+
+/* background-color:	#383838; */
+/* color: "##383838" */
+
+
+.hero-image {
+  background: url("/img/header3.jpg");
+  width: 100%;
+  height: 600px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  opacity: 0.85;
+}
+
+.headerForm {
+  margin: 20px;
+  max-width: 1500px;
+  position: relative;
+  /* text-align: center; */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+}
+.headerText {
+  margin: 20px;
+  max-width: 1000px;
+  position: absolute;
+  text-align: center;
+  top: 18%;
+  left: 51%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+}
+.headerText h1 {
+  color: white;
+  text-align: center;
+  margin: 20px;
+  /* background-color: black; */
+  font-size:80px;
+  letter-spacing: 8px;
+}
+.headerText p {
+  color: white;
+  text-align: center;
+  margin: 20px;
+  /* background-color: black; */
+  font-size:20px;
+  letter-spacing: 9px;
+}
+.context {
+  margin: 0px;
+  max-width: 1900px;
+  position: absolute;
+  /* text-align: center; */
+  top: 200%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0px;
+}
+.context h2 {
+  color: #383838;
+  text-align: center;
+  margin: 50px;
+  /* background-color: black; */
+  font-size:45px;
+  letter-spacing: 4px;
+}
+
+.context img{
+  /* position: absolute; */
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+  line-height: 10px;
+} 
+.context h3  {
+  padding: 50px;
+  height: 50px;
+  color: black;
+  line-height: 10px;
+  text-align: center;
+  /* background-color: transparent; */
+  /* background-color:  #364d79; */
+};
+
+.context2 {
+  margin: 20px;
+  max-width: 1000px;
+  position: absolute;
+  /* text-align: center; */
+  top: 2%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* padding: 0px; */
+}
+
+span.b {
+  /* transform: rotate(-8deg); */
+  position: relative;
+  display: inline-block;
+  line-height: 250px;
+  margin: 40px;
+  width: 300px;
+  height: 300px;
+  padding: 5px;
+  border: 10px solid 	#E0E0E0;    
+  background-color:	#383838;
+  text-align:center;
+  font-size:18px;
+}
+
+Footer {
+  margin: 0px;
+  /* line-height: 100px; */
+  max-width: 2000px;
+  background-color:	#383838;
+  position: relative;
+  text-align: center;
+  top: 3100px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0px;
+}
+
+Footer h3  {
+  padding: 20px;
+  height: 20px;
+  color: #E0E0E0;
+  line-height: 5px;
+  text-align: center;
+  /* background-color: transparent; */
+  /* background-color:  #364d79; */
+};

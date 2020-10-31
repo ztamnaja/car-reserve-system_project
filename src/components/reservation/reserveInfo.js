@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
-import { List, Table, Statistic, Descriptions, Steps, Button ,Divider } from "antd";
+import { Descriptions, Steps, Button ,Divider } from "antd";
 import "antd/dist/antd.css";
 import "./reserveInfo.css";
-
+import Navbar from "../navbar";
 const { Step } = Steps;
 class ReserveInfo extends Component {
   constructor(props) {
@@ -28,17 +28,11 @@ class ReserveInfo extends Component {
     const httpResponse = await axios.get(`http://localhost:8000/car/${carId}`);
     console.log("car selected:", httpResponse.data);
     
-    // push car data to array carSelected >> using in List antd
-    // let carSelected = [];
-    // carSelected.push(httpResponse.data); 
-    // console.log("carSelected", carSelected);
-
     // re format duration date time
     let pickup_DateTime = moment(pickup_Date + ' ' + pickup_Time, 'DD/MM/YYYY HH:mm') //12-10-2020T11:13
     let return_DateTime = moment(return_Date + ' ' + return_Time,'DD/MM/YYYY HH:mm') //12-10-2020T11:13
     let durationDiff = moment.duration(return_DateTime.diff(pickup_DateTime));
     // console.log('duration', durationDiff);
-    
     let duration = durationDiff.asDays(); // using in 
     console.log('duration',duration);
     
@@ -51,12 +45,14 @@ class ReserveInfo extends Component {
  
     this.setState({
       List: httpResponse.data,
-      pickup_locationName: pickup_locationName,
-      return_locationName: return_locationName,
-      pickup_Date: pickup_Date,
-      pickup_Time: pickup_Time,
-      return_Date: return_Date,
-      return_Time: return_Time,
+      pickupLocationId: pickup_locationName,
+      returnLocationId: return_locationName,
+      pickupDate: pickup_Date,
+      pickupTime: pickup_Time,
+      returnDate: return_Date,
+      returnTime: return_Time,
+      pickupDateTime: pickup_DateTime,
+      returnDateTime: return_DateTime,
       carSelected: httpResponse.data,
       baseRate: httpResponse.data.carPrice.toFixed(2),
       extra: extra.toFixed(2),
@@ -70,17 +66,31 @@ class ReserveInfo extends Component {
     console.log('carSelected', this.state.carSelected);
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = async(event) => {
     event.preventDefault(); // not reload when onclick submit.
     // check user autherizer if not let user register first
     // if user passes autherizer put item to reservation and go to pay bill.
-
-
+    // if (userId){}
+    const payload ={
+      reserveStatus: 'passed',
+      reserveTotalPrice: this.state.estimatedTotal,
+      // userId: this.state.userId,
+      carId: this.state.carSelected.carId,
+      pickupLocationId: this.state.pickupLocationId,
+      returnLocationId: this.state.returnLocationId,
+      pickupDateTime: this.state.pickupDateTime,
+      returnDateTime: this.state.returnDateTime,
+    }
+    console.log('payload', payload);
+    const newReserve = await axios.post(`http://localhost:8000/Reservation`, payload )
+    console.log("reserved create:", newReserve);
   };
 
   render() {
     
     return (
+      <div>
+        <Navbar />
       <div className="reserveInfo">
         <Steps size="small" progressDot current={2}>
           <Step title="RESERVE A CAR" />
@@ -135,6 +145,7 @@ class ReserveInfo extends Component {
             <Button onClick={this.handleSubmit}>SUMMIT</Button>
           </div>
         </div>
+      </div>
       </div>
     );
   }

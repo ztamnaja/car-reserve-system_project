@@ -1,10 +1,10 @@
 import React from "react";
-import Home from "../home";
+import Register from "../register";
 
 export default function index() {
   return (
     <div>
-      <Home />
+      <Register />
     </div>
   );
 }

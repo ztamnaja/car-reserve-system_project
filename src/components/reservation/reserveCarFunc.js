@@ -3,14 +3,14 @@ import { withRouter } from "react-router-dom";
 import "antd/dist/antd.css";
 import "./reserveCar.css";
 import axios from "axios";
+import { Input, Select, DatePicker, TimePicker } from "antd";
 import moment from "moment";
 import StepOne from "./stepOne";
-import ReserveCarFunc from "./reserveCarFunc";
-import Navbar from "../navbar";
 import { createBrowserHistory } from "history";
 export const browserHistory = createBrowserHistory();
 
-class ReserveCar extends Component {
+const { Option } = Select;
+class ReserveCarFunc extends Component {
   constructor(props) {
     super(props);
     console.log("input reservation form");
@@ -93,34 +93,17 @@ class ReserveCar extends Component {
     });
   };
 
-  // addReservationItems = async (params) => {
-  //   await axios.post("http://localhost:8000/Reservation", params);
-  // };
-
   // put data to reservation table
 
   handleSubmit = (event) => {
-    // event.preventDefault(); // not reload when onclick submit.
-    // console.log("click SELECT A CAR", event);
-
     this.setState({ isLoading: true });
-    // let reserveCarData = {
-    //   pickup_locationName: this.state.pickup_locationName,
-    //   pickup_Date: this.state.pickup_Date,
-    //   pickup_Time: this.state.pickup_Time,
-    //   return_locationName: this.state.return_locationName,
-    //   return_Date: this.state.return_Date,
-    //   return_Time: this.state.return_Time,
-    // };
-    // console.log("reserveCarData in reservation page:", reserveCarData);
+
     localStorage.setItem("pickup_locationName", this.state.pickup_locationName);
     localStorage.setItem("pickup_Date", this.state.pickup_Date);
     localStorage.setItem("pickup_Time", this.state.pickup_Time);
     localStorage.setItem("return_locationName", this.state.return_locationName);
     localStorage.setItem("return_Date", this.state.return_Date);
     localStorage.setItem("return_Time", this.state.return_Time);
-    // send datas and go to next page.
-    // console.log("reserveCarData", reserveCarData);
     this.props.history.push({
       pathname: "/reservation/selectcar",
       // data: reserveCarData,
@@ -130,11 +113,78 @@ class ReserveCar extends Component {
   render() {
     return (
       <div>
-        <Navbar />
-        <StepOne />
-        <ReserveCarFunc />
+        <form>
+          <div className="InputForm">
+            <Input.Group className="InputElement" compact>
+              <Select
+                value={this.state.pickup_locationName}
+                style={{ width: "50%" }}
+                defaultValue="Select your pick-up location..." // set at state
+                onChange={this.handleLocationChange_pickup}
+              >
+                {this.state.List.map((item) => (
+                  <Option key={item.locationId} value={item.locationId}>
+                    {item.locationName}
+                  </Option>
+                ))}
+              </Select>
+              <DatePicker
+                style={{ width: "30%" }}
+                defaultValue={moment(new Date(), "dddd, MMMM Do YYYY")}
+                selected={this.state.pickup_Date}
+                name="pickup_Date"
+                format="dddd, MMMM Do YYYY"
+                // selected={this.state.pickup_Date}
+                onChange={this.handleDateChange_pickup}
+              />
+              <TimePicker
+                name="pickup_Time"
+                // value={this.state.pickup_Time}
+                showTime={{ format: "HH:mm" }}
+                defaultValue={moment(new Date(), "HH:mm")}
+                format=" HH:mm"
+                onChange={this.handleTimeChange_pickup}
+              />
+            </Input.Group>
+            <Input.Group className="InputElement" compact>
+              <Select
+                value={this.state.return_locationName}
+                style={{ width: "50%" }}
+                defaultValue="Select your return location..." // set at state
+                onChange={this.handleLocationChange_return}
+              >
+                {this.state.List.map((item) => (
+                  <Option key={item.locationId} value={item.locationId}>
+                    {item.locationName}
+                  </Option>
+                ))}
+              </Select>
+              <DatePicker
+                style={{ width: "30%" }}
+                defaultValue={moment(new Date(), "dddd, MMMM Do YYYY")}
+                selected={this.state.return_Date}
+                name="return_Date"
+                format="dddd, MMMM Do YYYY"
+                // selected={this.state.return_Date}
+                onChange={this.handleDateChange_return}
+              />
+              <TimePicker
+                name="return_Time"
+                // value={this.state.return_Time}
+                showTime={{ format: "HH:mm" }}
+                defaultValue={moment(new Date(), "HH:mm")}
+                format=" HH:mm"
+                onChange={this.handleTimeChange_return}
+              />
+            </Input.Group>
+
+            <button className="Button" onClick={this.handleSubmit}>
+              SELECT A CAR
+            </button>
+          </div>
+        </form>
       </div>
     );
   }
 }
-export default withRouter(ReserveCar);
+export default withRouter(ReserveCarFunc);
