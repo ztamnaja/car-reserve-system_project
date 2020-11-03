@@ -1,59 +1,15 @@
 import React, { Component, useState } from "react";
 import { withRouter } from "react-router-dom";
-// import { Form, Input, Button, Checkbox } from "antd";
-// import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./register.css";
 import Navbar from "./navbar";
 import {
   Form,
   Input,
   Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
   Button,
-  AutoComplete,
 } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
-const residences = [
-  {
-    value: "zhejiang",
-    label: "Zhejiang",
-    children: [
-      {
-        value: "hangzhou",
-        label: "Hangzhou",
-        children: [
-          {
-            value: "xihu",
-            label: "West Lake",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: "jiangsu",
-    label: "Jiangsu",
-    children: [
-      {
-        value: "nanjing",
-        label: "Nanjing",
-        children: [
-          {
-            value: "zhonghuamen",
-            label: "Zhong Hua Men",
-          },
-        ],
-      },
-    ],
-  },
-];
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -85,7 +41,6 @@ const tailFormItemLayout = {
   },
 };
 
-// export default function RegistrationForm() {
 function RegistrationForm() {
   const [form] = Form.useForm();
 
@@ -98,32 +53,13 @@ function RegistrationForm() {
       +66{" "}
     </Form.Item>
   );
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
 
-  const onWebsiteChange = (value) => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(
-        [".com", ".org", ".net"].map((domain) => `${value}${domain}`)
-      );
-    }
-  };
-
-  const websiteOptions = autoCompleteResult.map((website) => ({
-    label: website,
-    value: website,
-  }));
   return (
     <Form
       {...formItemLayout}
       form={form}
       name="register"
       onFinish={onFinish}
-      // initialValues={{
-      //   // residence: ["zhejiang", "hangzhou", "xihu"],
-      //   prefix: "+66",
-      // }}
       scrollToFirstError
     >
       <Form.Item
@@ -209,7 +145,7 @@ function RegistrationForm() {
         label="Phone Number"
         rules={[
           {
-            required: true,
+            // required: true, // maybe not need 
             message: "Please input your phone number!",
           },
         ]}
@@ -221,19 +157,6 @@ function RegistrationForm() {
           }}
         />
       </Form.Item>
-      {/* <Form.Item
-        name="Address"
-        label="Habitual Residence"
-        rules={[
-          {
-            type: "array",
-            required: true,
-            message: "Please select your habitual residence!",
-          },
-        ]}
-      >
-        <Cascader options={residences} />
-      </Form.Item> */}
 
       <Form.Item {...tailFormItemLayout}>
         <Button type="primary" htmlType="submit">
