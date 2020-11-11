@@ -70,20 +70,32 @@ class ReserveInfo extends Component {
     event.preventDefault(); // not reload when onclick submit.
     // check user autherizer if not let user register first
     // if user passes autherizer put item to reservation and go to pay bill.
-    // if (userId){}
-    const payload ={
-      reserveStatus: 'passed',
-      reserveTotalPrice: this.state.estimatedTotal,
-      // userId: this.state.userId,
-      carId: this.state.carSelected.carId,
-      pickupLocationId: this.state.pickupLocationId,
-      returnLocationId: this.state.returnLocationId,
-      pickupDateTime: this.state.pickupDateTime,
-      returnDateTime: this.state.returnDateTime,
+
+    const userIdPass = await axios.post(`http://localhost:8000/User/:id`);
+    if (userIdPass) {
+      const payload = {
+        reserveStatus: "passed",
+        reserveTotalPrice: this.state.estimatedTotal,
+        // userId: this.state.userId,
+        carId: this.state.carSelected.carId,
+        pickupLocationId: this.state.pickupLocationId,
+        returnLocationId: this.state.returnLocationId,
+        pickupDateTime: this.state.pickupDateTime,
+        returnDateTime: this.state.returnDateTime,
+      };
+      console.log("payload", payload);
+      const newReserve = await axios.post(
+        `http://localhost:8000/Reservation`,
+        payload
+      );
+      console.log("reserved create:", newReserve);
+    } else {
     }
-    console.log('payload', payload);
-    const newReserve = await axios.post(`http://localhost:8000/Reservation`, payload )
-    console.log("reserved create:", newReserve);
+
+
+
+
+
   };
 
   render() {
