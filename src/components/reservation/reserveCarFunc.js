@@ -3,11 +3,19 @@ import { withRouter } from "react-router-dom";
 import "antd/dist/antd.css";
 import "./reserveCar.css";
 import axios from "axios";
-import { Input, Select, DatePicker, TimePicker } from "antd";
+import {
+  Input,
+  Select,
+  DatePicker,
+  TimePicker,
+  notification,
+  Form,
+} from "antd";
 import moment from "moment";
 import StepOne from "./stepOne";
 import { createBrowserHistory } from "history";
 export const browserHistory = createBrowserHistory();
+
 
 const { Option } = Select;
 class ReserveCarFunc extends Component {
@@ -104,18 +112,42 @@ class ReserveCarFunc extends Component {
     localStorage.setItem("return_locationName", this.state.return_locationName);
     localStorage.setItem("return_Date", this.state.return_Date);
     localStorage.setItem("return_Time", this.state.return_Time);
-    this.props.history.push({
-      pathname: "/reservation/selectcar",
-      // data: reserveCarData,
-    });
+    this.props.history.push("/reservation/selectcar");
+    //   //validate all params before seding change page route
+    //   let localStorageItems = [
+    //     "pickup_locationName",
+    //     "pickup_Date",
+    //     "pickup_Time",
+    //     "return_locationName",
+    //     "return_Date",
+    //     "return_Time",
+    //   ];
+    //   let validatePass = "failed";
+    //   for (const item of localStorageItems) {
+    //     console.log("item", item);
+    //     console.log("localStorage.setItem(item)", localStorage.setItem(item));
+    //     // if item is undefind or falsy
+    //     if (!localStorage.setItem(item)) {
+    //       console.error(`plaese choose your ${item}`);
+    //       notification.error({ message: `plaese choose your ${item}` });
+    //     }
+    //     validatePass = "pass";
+    //   }
+    //   if (validatePass == "pass") {
+    //     this.props.history.push("/reservation/selectcar");
+    //   }
   };
 
   render() {
     return (
       <div>
-        <form>
+        <Form>
           <div className="InputForm">
-            <Input.Group className="InputElement" compact>
+            <Input.Group
+              
+              className="InputElement"
+              compact
+            >
               <Select
                 value={this.state.pickup_locationName}
                 style={{ width: "50%" }}
@@ -182,7 +214,7 @@ class ReserveCarFunc extends Component {
               SELECT A CAR
             </button>
           </div>
-        </form>
+        </Form>
       </div>
     );
   }

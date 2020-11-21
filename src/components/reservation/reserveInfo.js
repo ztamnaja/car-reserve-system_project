@@ -1,10 +1,12 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import { Descriptions, Steps, Button ,Divider } from "antd";
 import "antd/dist/antd.css";
 import "./reserveInfo.css";
-import Navbar from "../navbar";
+// import Navbar from "../navbar";
+import Navbar from "../pages/navbar";
 const { Step } = Steps;
 class ReserveInfo extends Component {
   constructor(props) {
@@ -68,12 +70,10 @@ class ReserveInfo extends Component {
 
   handleSubmit = async(event) => {
     event.preventDefault(); // not reload when onclick submit.
-    // check user autherizer if not let user register first
+    // check user autherizer if not let user register first >> change to... user nedd to login before reserved.
     // if user passes autherizer put item to reservation and go to pay bill.
 
-    const userIdPass = await axios.post(`http://localhost:8000/User/:id`);
-    if (userIdPass) {
-      const payload = {
+      const body = {
         reserveStatus: "passed",
         reserveTotalPrice: this.state.estimatedTotal,
         // userId: this.state.userId,
@@ -83,19 +83,19 @@ class ReserveInfo extends Component {
         pickupDateTime: this.state.pickupDateTime,
         returnDateTime: this.state.returnDateTime,
       };
-      console.log("payload", payload);
-      const newReserve = await axios.post(
-        `http://localhost:8000/Reservation`,
-        payload
-      );
-      console.log("reserved create:", newReserve);
-    } else {
-    }
+      // console.log("payload", payload);
+      // const newReserve = await axios.post(
+      //   `http://localhost:8000/Reservation`,
+      //   payload
+      // );
+      // console.log("reserved create:", newReserve);
 
-
-
-
-
+    await axios
+      .post(`http://localhost:8000/Reservation`, body)
+      .then((result) => {
+        console.log("result from sql:", result);
+        this.props.history.push("/reservation/sucessful");
+      });
   };
 
   render() {
@@ -163,4 +163,4 @@ class ReserveInfo extends Component {
   }
 }
 
-export default ReserveInfo;
+export default withRouter(ReserveInfo);

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { List, Card, Collapse } from "antd";
-import Navbar from "./navbar";
+import Navbar from "../pages/navbar";
 import "antd/dist/antd.css";
 import {
   UserOutlined,

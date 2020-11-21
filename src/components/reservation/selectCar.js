@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
-import Navbar from "../navbar";
+// import Navbar from "../navbar";
+import Navbar from "../pages/navbar";
 import {
   List,
   Button,

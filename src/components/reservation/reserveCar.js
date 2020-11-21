@@ -6,9 +6,18 @@ import axios from "axios";
 import moment from "moment";
 import StepOne from "./stepOne";
 import ReserveCarFunc from "./reserveCarFunc";
-import Navbar from "../navbar";
-import { createBrowserHistory } from "history";
+// import Navbar from "../navbar";
+import Navbar from "../pages/navbar";
+import { Layout, notification, Row, Col } from "antd";
+import {createBrowserHistory} from "history";
+const layout = {
+  // for reponsive web
+  labelCol: { xs: 24, sm: 5, md: 4, lg: 5, xl: 4, xxl: 3 },
+  wrapperCol: { xs: 24, sm: 19, md: 20, lg: 19, xl: 20, xxl: 21 },
+};
+
 export const browserHistory = createBrowserHistory();
+const { Header, Content, Footer } = Layout;
 
 class ReserveCar extends Component {
   constructor(props) {
@@ -93,12 +102,6 @@ class ReserveCar extends Component {
     });
   };
 
-  // addReservationItems = async (params) => {
-  //   await axios.post("http://localhost:8000/Reservation", params);
-  // };
-
-  // put data to reservation table
-
   handleSubmit = (event) => {
     // event.preventDefault(); // not reload when onclick submit.
     // console.log("click SELECT A CAR", event);
@@ -113,26 +116,50 @@ class ReserveCar extends Component {
     //   return_Time: this.state.return_Time,
     // };
     // console.log("reserveCarData in reservation page:", reserveCarData);
+    
     localStorage.setItem("pickup_locationName", this.state.pickup_locationName);
     localStorage.setItem("pickup_Date", this.state.pickup_Date);
     localStorage.setItem("pickup_Time", this.state.pickup_Time);
     localStorage.setItem("return_locationName", this.state.return_locationName);
     localStorage.setItem("return_Date", this.state.return_Date);
     localStorage.setItem("return_Time", this.state.return_Time);
-    // send datas and go to next page.
-    // console.log("reserveCarData", reserveCarData);
-    this.props.history.push({
-      pathname: "/reservation/selectcar",
-      // data: reserveCarData,
-    });
+
+    //validate all params before seding change page route
+    let localStorageItems = ['pickup_locationName', 'pickup_Date', 'pickup_Time', 'return_locationName', 'return_Date', 'return_Time']
+    let validatePass = 'failed'
+    for (const item of localStorageItems) {
+      console.log('item',item)
+      console.log('localStorage.setItem(item)', localStorage.setItem(item))
+      // if item is undefind or falsy
+    //   if (!localStorage.setItem(item)) {
+    //     console.error(`plaese choose your ${item}`);
+    //     notification.error({ message: `plaese choose your ${item}` });
+    //   }
+    //   validatePass = "pass";
+    // }
+    // if (validatePass == "pass") {
+    //   this.props.history.push("/reservation/selectcar");
+    }
+    // console.log("localStorage.setItem", localStorage.(setItem));
+
+    // send items and go to next page.
   };
 
   render() {
     return (
       <div>
-        <Navbar />
-        <StepOne />
-        <ReserveCarFunc />
+        {/* <Row justify="center">
+          <Col xs={23} sm={23} md={23} lg={14} xl={14} xxl={12}> */}
+            <Navbar />
+            <StepOne />
+            <ReserveCarFunc />
+            <Footer style={{ background: "#383838", top: "715px" }}>
+              <div>
+                <h3>Codecamp Final Project ©2020 Created by zTamnaja</h3>
+              </div>
+            </Footer>
+          {/* </Col>
+        </Row> */}
       </div>
     );
   }
